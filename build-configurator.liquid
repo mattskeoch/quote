@@ -1,0 +1,124 @@
+{{ 'build-configurator.css' | asset_url | stylesheet_tag }}
+
+<div class="product-configurator" data-configurator>
+  <a href="#" class="restart-link" data-restart>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M14 8c0 3.3-2.7 6-6 6s-6-2.7-6-6 2.7-6 6-6v2l4-3-4-3v2c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8h-2z" fill="currentColor"/>
+    </svg>
+    Restart
+  </a>
+
+  <h1 class="configurator-title">{{ section.settings.configurator_title }}</h1>
+  
+  <div class="configurator-progress">
+    <div class="progress-bar">
+      <div class="progress-fill" data-progress></div>
+    </div>
+    <div class="step-indicators" data-step-indicators></div>
+  </div>
+
+  <div class="configurator-container" data-configurator>
+    <!-- Step 1: Vehicle Selection -->
+    <div class="configurator-step" data-step="1">
+      <h2>Select Your Vehicle</h2>
+      <select class="vehicle-select" data-vehicle-select>
+        <option value="">Select a vehicle</option>
+      </select>
+      <div data-vehicle-details></div>
+      <div class="step-navigation">
+        <button class="button" data-next-step>Next</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Build Type Selection -->
+    <div class="configurator-step" data-step="2">
+      <h2>Select Your Build Type</h2>
+      <div class="build-type-options" data-build-type-options></div>
+      <div class="step-navigation">
+        <button class="button button--secondary" data-prev-step>Previous</button>
+        <button class="button" data-next-step>Next</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Tray Selection -->
+    <div class="configurator-step" data-step="3">
+      <h2>Select Your Tray</h2>
+      <div class="option-grid" data-tray-options></div>
+      <div class="step-navigation">
+        <button class="button button--secondary" data-prev-step>Previous</button>
+        <button class="button" data-next-step>Next</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Canopy Selection -->
+    <div class="configurator-step" data-step="4">
+      <h2>Select Your Canopy</h2>
+      <div class="option-grid" data-canopy-options></div>
+      <div class="step-navigation">
+        <button class="button button--secondary" data-prev-step>Previous</button>
+        <button class="button" data-next-step>Next</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Accessories Selection -->
+    <div class="configurator-step" data-step="5">
+      <h2>Select Your Accessories</h2>
+      <div class="accessories-grid" data-accessories-options></div>
+      <div class="step-navigation">
+        <button class="button button--secondary" data-prev-step>Previous</button>
+        <button class="button" data-next-step>Next</button>
+      </div>
+    </div>
+
+    <!-- Step 6: Summary -->
+    <div class="configurator-step" data-step="6">
+      <h2>Summary</h2>
+      <div class="summary-container" data-summary></div>
+      <div class="step-navigation">
+        <button class="button button--secondary" data-prev-step>Previous</button>
+        <button class="button" data-add-to-cart>Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="total-price-display">
+    <div class="price-info">
+      <span class="total-price-label">Current Total:</span>
+      <span class="total-price-amount" data-current-total>$0.00</span>
+    </div>
+    <div class="weight-info" data-weight-info>
+      <span class="current-weight">Total Weight: <span class="weight-value">0</span> kg</span>
+      <span class="separator">|</span>
+      <span class="weight-limit">Vehicle GVM: <span class="gvm-value">--</span> kg</span>
+    </div>
+  </div>
+
+  <div class="configurator-controls">
+    <button class="btn btn-secondary" data-prev-step style="display: none;">Previous</button>
+    <button class="btn btn-primary" data-next-step>Next</button>
+    <button class="btn btn-primary" data-add-to-cart style="display: none;">View Summary</button>
+  </div>
+</div>
+
+{{ 'configurator-data.js' | asset_url | script_tag }}
+{{ 'build-configurator.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+  "name": "Product Configurator",
+  "settings": [
+    {
+      "type": "text",
+      "id": "configurator_title",
+      "label": "Configurator Title",
+      "default": "Build Your Custom Canopy"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Configurator",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
