@@ -2,7 +2,7 @@
   constructor(container) {
     this.container = container;
     this.currentStep = 1;
-    this.totalSteps = 6; // Increased total steps
+    this.totalSteps = 6; 
     this.totalPrice = 0;
     this.totalWeight = 0;
     this.configuration = {
