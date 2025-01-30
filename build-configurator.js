@@ -36,7 +36,7 @@ class ProductConfigurator {
       stepElement.setAttribute('data-step', step.id);
       
       stepElement.innerHTML = `
-        <h4>${step.name}</h4>
+        <h5>${step.name}</h5>
         ${this.getStepContent(step)}
         <div class="step-navigation">
           ${step.id > 1 ? '<button class="button button--secondary" data-prev-step>Previous</button>' : ''}
