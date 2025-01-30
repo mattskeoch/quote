@@ -55,16 +55,18 @@ const CONFIGURATOR_DATA = {
       dataKey: 'passengerFitout',
       required: true,
       configKey: 'passengerFitout',
-      template: 'passenger-fitout'
+      template: 'passenger-fitout',
+      showIf: (config) => config.buildType && ['tray-canopy', 'service-body'].includes(config.buildType.id)
     },  
     {
       id: 7,
-      name: 'Accessories Selection',
+      name: 'External Accessories',
       type: 'multi-select',
       dataKey: 'accessories',
       required: false,
       configKey: 'accessories',
-      template: 'accessories'
+      template: 'accessories',
+      showIf: (config) => config.buildType && ['tray-canopy', 'service-body'].includes(config.buildType.id)
     },
     {
       id: 8,
