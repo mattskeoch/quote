@@ -50,6 +50,15 @@ const CONFIGURATOR_DATA = {
     },
     {
       id: 6,
+      name: 'Passenger Side Fitout',
+      type: 'card-select',
+      dataKey: 'passengerFitout',
+      required: true,
+      configKey: 'passengerFitout',
+      template: 'passenger-fitout'
+    },  
+    {
+      id: 7,
       name: 'Accessories Selection',
       type: 'multi-select',
       dataKey: 'accessories',
@@ -58,7 +67,7 @@ const CONFIGURATOR_DATA = {
       template: 'accessories'
     },
     {
-      id: 7,
+      id: 8,
       name: 'Summary',
       type: 'summary',
       required: true,
@@ -111,7 +120,6 @@ const CONFIGURATOR_DATA = {
       gvm: 2900 // GVM in kg
     }
   ],
-
   trays: [
     {
       id: 1,
@@ -173,7 +181,7 @@ const CONFIGURATOR_DATA = {
       image: 'https://placehold.co/400x300?text=300mm+Sides',
       price: 500,
       description: 'AS Aluminium Tray Sides 300mm - Matte Black',
-      height: 300 // Height in mm
+      weight: 30
     },
     {
       id: 2,
@@ -181,7 +189,7 @@ const CONFIGURATOR_DATA = {
       image: 'https://placehold.co/400x300?text=600mm+Sides',
       price: 800,
       description: 'AS Aluminium Tray Sides 600mm - Matte Black',
-      height: 600
+      weight: 30
     },
     {
       id: 3,
@@ -189,7 +197,7 @@ const CONFIGURATOR_DATA = {
       image: 'https://placehold.co/400x300?text=700mm+Sides',
       price: 900,
       description: 'AS Aluminium Tray Sides 700mm - Matte Black',
-      height: 700
+      weight: 30
     },
     {
       id: 4,
@@ -197,7 +205,7 @@ const CONFIGURATOR_DATA = {
       image: 'https://placehold.co/400x300?text=1000mm+Sides',
       price: 1200,
       description: 'AS Aluminium Tray Sides 1000mm - Matte Black',
-      height: 1000
+      weight: 30
     },
     {
       id: 5,
@@ -205,7 +213,7 @@ const CONFIGURATOR_DATA = {
       image: 'https://placehold.co/400x300?text=1700mm+Sides',
       price: 1800,
       description: 'AS Aluminium Tray Sides 1700mm - Matte Black',
-      height: 1700
+      weight: 30
     },
     {
       id: 6,
@@ -213,7 +221,7 @@ const CONFIGURATOR_DATA = {
       image: 'https://placehold.co/400x300?text=2000mm+Sides',
       price: 2000,
       description: 'AS Aluminium Tray Sides 2000mm - Matte Black',
-      height: 2000
+      weight: 30
     },
     {
       id: 7,
@@ -221,7 +229,34 @@ const CONFIGURATOR_DATA = {
       image: 'https://placehold.co/400x300?text=2400mm+Sides',
       price: 2400,
       description: 'AS Aluminium Tray Sides 2400mm - Matte Black',
-      height: 2400
+      weight: 30
+    }
+  ],
+
+  passengerFitout: [
+    {
+      id: 1,
+      name: '1600 Fitout - No Pantry',
+      image: 'https://placehold.co/400x300?text=1600+Fitout',
+      description: '',
+      price: 1000,
+      weight: 100 
+    },
+    {
+      id: 2,
+      name: '1400 Fitout - With Pantry',
+      image: 'https://placehold.co/400x300?text=1400+Fitout',
+      description: '',
+      price: 1200,
+      weight: 100 
+    },
+    {
+      id: 3,
+      name: 'Empty Fitout',
+      image: 'https://placehold.co/400x300?text=Empty+Fitout',
+      description: '',
+      price: 0,
+      weight: 0 
     }
   ],
 
@@ -232,7 +267,7 @@ const CONFIGURATOR_DATA = {
       image: 'https://placehold.co/400x300?text=Spare+Wheel+Holder',
       price: 289,
       description: 'AS Spare Wheel Carrier - Matte Black',
-      weight: 15 // Weight in kg
+      weight: 15 
     },
     {
       id: 'jerrycan1',
@@ -240,7 +275,7 @@ const CONFIGURATOR_DATA = {
       image: 'https://placehold.co/400x300?text=Lockable+Jerry+Can+Holder',
       price: 299,
       description: 'AS Lockable Jerry Can Holder - Matte Black',
-      weight: 8 // Weight in kg
+      weight: 8 
     },
     {
       id: 'jerrycan2',
@@ -248,39 +283,7 @@ const CONFIGURATOR_DATA = {
       image: 'https://placehold.co/400x300?text=Jerry+Can+Holder',
       price: 250,
       description: 'AS Jerry Can Holder - Matte Black',
-      weight: 6 // Weight in kg
-    },
-    {
-      id: 'pantryslide1',
-      name: 'AS Regular Pantry Slide',
-      image: 'https://placehold.co/400x300?text=Pantry+Slide',
-      price: 800,
-      description: 'AS Regular Pantry Slide - Matte Black',
-      weight: 25 // Weight in kg
-    },
-    {
-      id: 'fridgeslide1',
-      name: 'AS Fridge Slide - 80L',
-      image: 'https://placehold.co/400x300?text=Fridge+Slide+80L',
-      price: 489,
-      description: 'AS Fridge Slide - 80L - Matte Black',
-      weight: 35 // Weight in kg
-    },
-    {
-      id: 'fridgeslide2',
-      name: 'AS Fridge Slide - 60L',
-      image: 'https://placehold.co/400x300?text=Fridge+Slide+60L',
-      price: 429,
-      description: 'AS Fridge Slide - 60L - Matte Black',
-      weight: 30 // Weight in kg
-    },
-    {
-      id: 'fridgeslide3',
-      name: 'AS Fridge Slide - 40/50L',
-      image: 'https://placehold.co/400x300?text=Fridge+Slide+40/50L',
-      price: 359,
-      description: 'AS Fridge Slide - 40/50L - Matte Black',
-      weight: 25 // Weight in kg
+      weight: 6 
     },
     {
       id: 'rearladder1',
@@ -288,7 +291,7 @@ const CONFIGURATOR_DATA = {
       image: 'https://placehold.co/400x300?text=Rear+Folding+Ladder',
       price: 369,
       description: 'AS Rear Ladder - Matte Black',
-      weight: 12 // Weight in kg
+      weight: 12 
     }
   ]
 };

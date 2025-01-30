@@ -12,6 +12,7 @@ class ProductConfigurator {
       tray: null,
       canopy: null,
       traySides: null,
+      passengerFitout: null,
       accessories: []
     };
     
@@ -65,6 +66,8 @@ class ProductConfigurator {
         return '<div class="option-grid" data-canopy-options></div>';
       case 'tray-sides':
         return '<div class="option-grid" data-tray-sides-options></div>';
+      case 'passenger-fitout':
+        return '<div class="option-grid" data-passenger-fitout-options></div>';
       case 'accessories':
         return '<div class="accessories-grid" data-accessories-options></div>';
       case 'summary':
@@ -243,6 +246,9 @@ class ProductConfigurator {
       case 'tray-sides':
         this.renderTraySideOptions();
         break;
+      case 'passenger-fitout':
+        this.renderPassengerFitout();
+        break;
       case 'accessories':
         this.renderAccessories();
         break;
@@ -352,6 +358,27 @@ class ProductConfigurator {
             <h3>${side.name}</h3>
             ${side.description ? `<p>${side.description}</p>` : ''}
             ${side.price > 0 ? `<div class="option-price">$${side.price.toLocaleString()}</div>` : ''}
+          </div>
+        </div>
+      `)
+      .join('');
+  }
+
+  renderPassengerFitout() {
+    const container = this.container.querySelector('[data-passenger-fitout-options]');
+    if (!container) return;
+
+    container.innerHTML = CONFIGURATOR_DATA.passengerFitout
+      .map(fitout => `
+        <div class="option-card ${this.configuration.passengerFitout?.id === fitout.id ? 'selected' : ''}" 
+             data-option-id="${fitout.id}">
+          <div class="option-image">
+            <img src="${fitout.image}" alt="${fitout.name}" loading="lazy">
+          </div>
+          <div class="option-details">
+            <h3>${fitout.name}</h3>
+            ${fitout.description ? `<p>${fitout.description}</p>` : ''}
+            ${fitout.price > 0 ? `<div class="option-price">$${fitout.price.toLocaleString()}</div>` : ''}
           </div>
         </div>
       `)
@@ -483,6 +510,11 @@ class ProductConfigurator {
     if (this.configuration.traySides) {
       total += this.configuration.traySides.price;
     }
+
+    // Add passenger fitout price if selected
+    if (this.configuration.passengerFitout) {
+      total += this.configuration.passengerFitout.price;
+    }
     
     // Add accessories prices
     if (this.configuration.accessories.length > 0) {
@@ -531,6 +563,11 @@ class ProductConfigurator {
     // Add tray sides weight
     if (this.configuration.traySides) {
       this.totalWeight += this.configuration.traySides.weight || 0;
+    }
+
+    // Add passenger fitout weight
+    if (this.configuration.passengerFitout) {
+      this.totalWeight += this.configuration.passengerFitout.weight || 0;
     }
 
     // Add accessories weight
@@ -648,6 +685,22 @@ class ProductConfigurator {
               <div class="summary-item-description">${this.configuration.traySides.description}</div>
             </div>
             <div class="summary-item-price">$${(this.configuration.traySides.price || 0).toLocaleString()}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Passenger Fitout
+    if (this.configuration.passengerFitout) {
+      summaryHtml += `
+        <div class="summary-section">
+          <h3>Passenger Fitout</h3>
+          <div class="summary-item">
+            <div class="summary-item-details">
+              <div class="summary-item-name">${this.configuration.passengerFitout.name}</div>
+              <div class="summary-item-description">${this.configuration.passengerFitout.description}</div>
+            </div>
+            <div class="summary-item-price">$${(this.configuration.passengerFitout.price || 0).toLocaleString()}</div>
           </div>
         </div>
       `;
