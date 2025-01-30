@@ -413,10 +413,10 @@
 
 .vehicle-select {
   width: 100%;
-  padding: 1rem;
+  padding: 1.8rem 1rem;
   font-size: 1.1rem;
   border: 2px solid #e9ecef;
-  border-radius: 8px;
+  border-radius: 4px;
   background-color: #fff;
   cursor: pointer;
   appearance: none;
