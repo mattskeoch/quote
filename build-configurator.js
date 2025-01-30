@@ -120,7 +120,13 @@ class ProductConfigurator {
       progressBar.style.width = `${progress}%`;
     }
 
-    this.updateStepIndicators();
+    // Update step counter position and text
+    const stepCounter = this.container.querySelector('[data-step-counter]');
+    if (stepCounter) {
+      stepCounter.textContent = `${this.currentStep}/${this.totalSteps}`;
+      stepCounter.style.left = `${progress}%`;
+    }
+
     this.updateNavigationButtons();
   }
 

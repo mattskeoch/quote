@@ -14,13 +14,13 @@
     <div class="progress-bar">
       <div class="progress-fill" data-progress></div>
     </div>
-    <div class="step-indicators" data-step-indicators></div>
+    <div class="step-counter" data-step-counter></div>
   </div>
 
   <div class="configurator-container" data-configurator>
     <!-- Step 1: Vehicle Selection -->
     <div class="configurator-step" data-step="1">
-      <h2>Select Your Vehicle</h2>
+      <h4>Select Your Vehicle</h4>
       <select class="vehicle-select" data-vehicle-select>
         <option value="">Select a vehicle</option>
       </select>
@@ -32,7 +32,7 @@
 
     <!-- Step 2: Build Type Selection -->
     <div class="configurator-step" data-step="2">
-      <h2>Select Your Build Type</h2>
+      <h4>Select Your Build Type</h4>
       <div class="build-type-options" data-build-type-options></div>
       <div class="step-navigation">
         <button class="button button--secondary" data-prev-step>Previous</button>
@@ -42,7 +42,7 @@
 
     <!-- Step 3: Tray Selection -->
     <div class="configurator-step" data-step="3">
-      <h2>Select Your Tray</h2>
+      <h4>Select Your Tray</h4>
       <div class="option-grid" data-tray-options></div>
       <div class="step-navigation">
         <button class="button button--secondary" data-prev-step>Previous</button>
@@ -52,7 +52,7 @@
 
     <!-- Step 4: Canopy Selection -->
     <div class="configurator-step" data-step="4">
-      <h2>Select Your Canopy</h2>
+      <h4>Select Your Canopy</h4>
       <div class="option-grid" data-canopy-options></div>
       <div class="step-navigation">
         <button class="button button--secondary" data-prev-step>Previous</button>
@@ -62,7 +62,7 @@
 
     <!-- Step 5: Accessories Selection -->
     <div class="configurator-step" data-step="5">
-      <h2>Select Your Accessories</h2>
+      <h4>Select Your Accessories</h4>
       <div class="accessories-grid" data-accessories-options></div>
       <div class="step-navigation">
         <button class="button button--secondary" data-prev-step>Previous</button>
@@ -72,11 +72,11 @@
 
     <!-- Step 6: Summary -->
     <div class="configurator-step" data-step="6">
-      <h2>Summary</h2>
+      <h4>Summary</h4>
       <div class="summary-container" data-summary></div>
       <div class="step-navigation">
         <button class="button button--secondary" data-prev-step>Previous</button>
-        <button class="button" data-add-to-cart>Add to Cart</button>
+        <button class="button" data-add-to-cart>Get Quote</button>
       </div>
     </div>
   </div>
@@ -92,12 +92,6 @@
       <span class="weight-limit">Vehicle GVM: <span class="gvm-value">--</span> kg</span>
     </div>
   </div>
-
-  <div class="configurator-controls">
-    <button class="btn btn-secondary" data-prev-step style="display: none;">Previous</button>
-    <button class="btn btn-primary" data-next-step>Next</button>
-    <button class="btn btn-primary" data-add-to-cart style="display: none;">View Summary</button>
-  </div>
 </div>
 
 {{ 'configurator-data.js' | asset_url | script_tag }}
@@ -111,7 +105,7 @@
       "type": "text",
       "id": "configurator_title",
       "label": "Configurator Title",
-      "default": "Build Your Custom Canopy"
+      "default": "Quote Builder"
     }
   ],
   "presets": [

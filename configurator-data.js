@@ -3,19 +3,19 @@ const CONFIGURATOR_DATA = {
     {
       id: 'tray-only',
       name: 'Tray Only',
-      description: 'A sturdy tray for your vehicle',
+      description: '',
       image: 'https://placehold.co/400x300?text=Tray+Only'
     },
     {
       id: 'tray-canopy',
       name: 'Tray and Canopy',
-      description: 'Complete setup with tray and canopy',
+      description: '',
       image: 'https://placehold.co/400x300?text=Tray+and+Canopy'
     },
     {
       id: 'service-body',
       name: 'Service Body',
-      description: 'Professional service body solution',
+      description: '',
       image: 'https://placehold.co/400x300?text=Service+Body'
     }
   ],
