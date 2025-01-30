@@ -1,537 +1,537 @@
-  .product-configurator {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: #fff;
-  }
+.product-configurator {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: #fff;
+}
 
-  .configurator-title {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 2rem;
-    color: #333;
-  }
+.configurator-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #333;
+}
 
-  /* Progress Bar */
-  .configurator-progress {
-    margin-bottom: 3rem;
-    padding: 0 1rem;
-  }
+/* Progress Bar */
+.configurator-progress {
+  margin-bottom: 3rem;
+  padding: 0 1rem;
+}
 
-  .progress-bar {
-    height: 10px;
-    background: #e5e5e5;
-    border-radius: 5px;
-    margin-bottom: 1.5rem;
-    overflow: hidden;
-  }
+.progress-bar {
+  height: 10px;
+  background: #e5e5e5;
+  border-radius: 5px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
 
-  .progress-fill {
-    height: 100%;
-    background: #AF0F1C;
-    border-radius: 5px;
-    transition: width 0.3s ease;
-  }
+.progress-fill {
+  height: 100%;
+  background: #AF0F1C;
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}
 
-  .step-indicators {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1rem;
-  }
+.step-indicators {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
 
-  .step-indicator {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: white;
-    border: 2px solid #e5e5e5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 14px;
-    color: #666;
-  }
+.step-indicator {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  color: #666;
+}
 
-  .step-indicator.active {
-    background: #AF0F1C;
-    color: white;
-    border-color: #AF0F1C;
-  }
+.step-indicator.active {
+  background: #AF0F1C;
+  color: white;
+  border-color: #AF0F1C;
+}
 
-  .step-indicator.completed {
-    background: #AF0F1C;
-    color: white;
-  }
+.step-indicator.completed {
+  background: #AF0F1C;
+  color: white;
+}
 
-  /* Options Grid */
-  .option-grid,
-  .build-type-options,
-  .accessories-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin: 2rem 0;
-  }
+/* Options Grid */
+.option-grid,
+.build-type-options,
+.accessories-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin: 2rem 0;
+}
 
-  .option-card {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1.5rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
+.option-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 
-  .option-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
+.option-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-  .option-card.selected {
-    border-color: #c41e3a;
-    box-shadow: 0 0 0 2px #c41e3a;
-  }
+.option-card.selected {
+  border-color: #c41e3a;
+  box-shadow: 0 0 0 2px #c41e3a;
+}
 
-  .option-image {
-    width: 100%;
-    aspect-ratio: 16/9;
-    margin-bottom: 1rem;
-    overflow: hidden;
-    border-radius: 4px;
-    background: #f5f5f5;
-  }
+.option-image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #f5f5f5;
+}
 
-  .option-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.option-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-  .option-details h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1.2rem;
-    color: #333;
-  }
+.option-details h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  color: #333;
+}
 
-  .option-details p {
-    margin: 0;
-    color: #666;
-    font-size: 0.9rem;
-  }
+.option-details p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
 
-  .option-price {
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: #AF0F1C;
-    margin-top: 1rem;
-  }
+.option-price {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #AF0F1C;
+  margin-top: 1rem;
+}
 
-  /* Option Toggle Button */
-  .option-toggle {
-    background-color: #AF0F1C;
-    color: white;
-    padding: 0.75rem;
-    text-align: center;
-    border-radius: 6px;
-    margin-top: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: 500;
-  }
+/* Option Toggle Button */
+.option-toggle {
+  background-color: #AF0F1C;
+  color: white;
+  padding: 0.75rem;
+  text-align: center;
+  border-radius: 6px;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 500;
+}
 
-  .option-toggle:hover {
-    background-color: #9e0d19;
-  }
+.option-toggle:hover {
+  background-color: #9e0d19;
+}
 
-  /* Accessories Section */
+/* Accessories Section */
+.accessories-container {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.accessories-categories {
+  flex: 0 0 200px;
+  border-right: 1px solid #e5e5e5;
+  padding-right: 1rem;
+}
+
+.accessories-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 2rem;
+}
+
+@media (max-width: 1024px) {
+  .accessories-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .accessories-options {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+  }
+}
+
+.category-item {
+  padding: 1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  color: #666;
+}
+
+.category-item:hover {
+  background: #f8f9fa;
+  color: #AF0F1C;
+}
+
+.category-item.active {
+  background: #AF0F1C;
+  color: white;
+  font-weight: 500;
+}
+
+/* Controls */
+.configurator-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding: 1rem;
+  border-top: 1px solid #e5e5e5;
+}
+
+.button {
+  background: #c41e3a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  min-width: 120px;
+}
+
+.button:hover {
+  background: #a01830;
+}
+
+.button--secondary {
+  background: #c41e3a;
+  color: white;
+}
+
+.button--secondary:hover {
+  background: #a01830;
+}
+
+/* Total Price Display */
+.configurator-step[data-step="5"] .total-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: right;
+  color: #AF0F1C;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px solid #AF0F1C;
+}
+
+.total-price-display {
+  text-align: right;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.price-info {
+  margin-bottom: 0.5rem;
+}
+
+.weight-info {
+  font-size: 0.85rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.weight-info .separator {
+  color: #ccc;
+}
+
+.weight-value.exceeded {
+  color: #d32f2f;
+  font-weight: 500;
+}
+
+/* Hide running total only on summary step */
+.product-configurator[data-current-step="5"] .total-price-display {
+  display: none;
+}
+
+.total-price-label {
+  font-size: 1.2rem;
+  color: #666;
+  margin-right: 1rem;
+}
+
+.total-price-amount {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #AF0F1C;
+}
+
+/* Summary Styles */
+.summary-section {
+  margin-bottom: 2rem;
+}
+
+.summary-section h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+}
+
+.summary-item-details {
+  flex: 1;
+}
+
+.summary-item-name {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.summary-item-description {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.summary-item-price {
+  font-weight: bold;
+  color: #AF0F1C;
+  font-size: 1.25rem;
+  margin-left: 2rem;
+  white-space: nowrap;
+}
+
+/* Modal Styles */
+.configurator-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-content h2 {
+  margin: 0 0 1.5rem;
+  color: #333;
+}
+
+.modal-body {
+  margin-bottom: 2rem;
+}
+
+.modal-total {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: right;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #e9ecef;
+  color: #AF0F1C;
+}
+
+/* Vehicle Select Styles */
+.select-container {
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.vehicle-select {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  background-color: #fff;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.5em;
+}
+
+.vehicle-select:focus {
+  outline: none;
+  border-color: #AF0F1C;
+}
+
+.selected-vehicle-details {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.selected-vehicle-details:empty {
+  display: none;
+}
+
+.vehicle-details-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.vehicle-details-info {
+  flex: 1;
+}
+
+.vehicle-details-name {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.vehicle-details-description {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.vehicle-details-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #AF0F1C;
+  white-space: nowrap;
+  margin-left: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .accessories-container {
-    display: flex;
-    gap: 2rem;
-    margin-top: 2rem;
+    flex-direction: column;
   }
 
   .accessories-categories {
-    flex: 0 0 200px;
-    border-right: 1px solid #e5e5e5;
-    padding-right: 1rem;
+    border-right: none;
+    border-bottom: 1px solid #e5e5e5;
+    padding-right: 0;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
   }
 
-  .accessories-options {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    padding: 2rem;
-  }
-
-  @media (max-width: 1024px) {
-    .accessories-options {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 768px) {
-    .accessories-options {
-      grid-template-columns: 1fr;
-      padding: 1rem;
-      gap: 1rem;
-    }
-  }
-
-  .category-item {
-    padding: 1rem;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-    color: #666;
-  }
-
-  .category-item:hover {
-    background: #f8f9fa;
-    color: #AF0F1C;
-  }
-
-  .category-item.active {
-    background: #AF0F1C;
-    color: white;
-    font-weight: 500;
-  }
-
-  /* Controls */
-  .configurator-controls {
-    display: flex;
-    justify-content: flex-end;
+  .option-grid,
+  .build-type-options,
+  .accessories-grid {
+    grid-template-columns: 1fr;
     gap: 1rem;
-    margin-top: 3rem;
-    padding: 1rem;
-    border-top: 1px solid #e5e5e5;
   }
+}
 
-  .button {
-    background: #c41e3a;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 12px 24px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    min-width: 120px;
-  }
+/* Weight Information Display */
 
-  .button:hover {
-    background: #a01830;
-  }
+.configurator-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
 
-  .button--secondary {
-    background: #c41e3a;
-    color: white;
-  }
+.restart-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+  margin-bottom: 1.5rem;
+}
 
-  .button--secondary:hover {
-    background: #a01830;
-  }
+.restart-link:hover {
+  color: #333;
+}
 
-  /* Total Price Display */
-  .configurator-step[data-step="5"] .total-price {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: right;
-    color: #AF0F1C;
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border: 2px solid #AF0F1C;
-  }
+.restart-link svg {
+  width: 16px;
+  height: 16px;
+}
 
-  .total-price-display {
-    text-align: right;
-    padding: 1rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-    margin: 1rem 0;
-  }
+/* Step Navigation */
+.step-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+}
 
-  .price-info {
-    margin-bottom: 0.5rem;
-  }
+.step-navigation button {
+  min-width: 120px;
+}
 
-  .weight-info {
-    font-size: 0.85rem;
-    color: #666;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 0.75rem;
-  }
+/* First step only has Next button */
+.configurator-step[data-step="1"] .step-navigation {
+  justify-content: flex-end;
+}
 
-  .weight-info .separator {
-    color: #ccc;
-  }
+.configurator-step {
+  display: none;
+}
 
-  .weight-value.exceeded {
-    color: #d32f2f;
-    font-weight: 500;
-  }
-
-  /* Hide running total only on summary step */
-  .product-configurator[data-current-step="5"] .total-price-display {
-    display: none;
-  }
-
-  .total-price-label {
-    font-size: 1.2rem;
-    color: #666;
-    margin-right: 1rem;
-  }
-
-  .total-price-amount {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #AF0F1C;
-  }
-
-  /* Summary Styles */
-  .summary-section {
-    margin-bottom: 2rem;
-  }
-
-  .summary-section h3 {
-    font-size: 1.5rem;
-    color: #333;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #e9ecef;
-  }
-
-  .summary-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 1rem 0;
-    border-bottom: 1px solid #e9ecef;
-  }
-
-  .summary-item:last-child {
-    border-bottom: none;
-  }
-
-  .summary-item-details {
-    flex: 1;
-  }
-
-  .summary-item-name {
-    font-weight: bold;
-    margin-bottom: 0.25rem;
-  }
-
-  .summary-item-description {
-    font-size: 0.9rem;
-    color: #666;
-  }
-
-  .summary-item-price {
-    font-weight: bold;
-    color: #AF0F1C;
-    font-size: 1.25rem;
-    margin-left: 2rem;
-    white-space: nowrap;
-  }
-
-  /* Modal Styles */
-  .configurator-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
-
-  .modal-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    max-width: 600px;
-    width: 90%;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-
-  .modal-content h2 {
-    margin: 0 0 1.5rem;
-    color: #333;
-  }
-
-  .modal-body {
-    margin-bottom: 2rem;
-  }
-
-  .modal-total {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: right;
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 2px solid #e9ecef;
-    color: #AF0F1C;
-  }
-
-  /* Vehicle Select Styles */
-  .select-container {
-    max-width: 600px;
-    margin: 2rem auto;
-  }
-
-  .vehicle-select {
-    width: 100%;
-    padding: 1rem;
-    font-size: 1.1rem;
-    border: 2px solid #e9ecef;
-    border-radius: 8px;
-    background-color: #fff;
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 1.5em;
-  }
-
-  .vehicle-select:focus {
-    outline: none;
-    border-color: #AF0F1C;
-  }
-
-  .selected-vehicle-details {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-  }
-
-  .selected-vehicle-details:empty {
-    display: none;
-  }
-
-  .vehicle-details-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-
-  .vehicle-details-info {
-    flex: 1;
-  }
-
-  .vehicle-details-name {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-
-  .vehicle-details-description {
-    color: #666;
-    margin-bottom: 1rem;
-  }
-
-  .vehicle-details-price {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #AF0F1C;
-    white-space: nowrap;
-    margin-left: 2rem;
-  }
-
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .accessories-container {
-      flex-direction: column;
-    }
-
-    .accessories-categories {
-      border-right: none;
-      border-bottom: 1px solid #e5e5e5;
-      padding-right: 0;
-      padding-bottom: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .option-grid,
-    .build-type-options,
-    .accessories-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-  }
-
-  /* Weight Information Display */
-
-  .configurator-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 2rem;
-    padding: 1rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-  }
-
-  .restart-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #666;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.2s ease;
-    margin-bottom: 1.5rem;
-  }
-
-  .restart-link:hover {
-    color: #333;
-  }
-
-  .restart-link svg {
-    width: 16px;
-    height: 16px;
-  }
-
-  /* Step Navigation */
-  .step-navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid #eee;
-  }
-
-  .step-navigation button {
-    min-width: 120px;
-  }
-
-  /* First step only has Next button */
-  .configurator-step[data-step="1"] .step-navigation {
-    justify-content: flex-end;
-  }
-
-  .configurator-step {
-    display: none;
-  }
-
-  .configurator-step.active {
-    display: block;
-  }
+.configurator-step.active {
+  display: block;
+}

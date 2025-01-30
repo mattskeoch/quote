@@ -1,4 +1,4 @@
-  class ProductConfigurator {
+class ProductConfigurator {
   constructor(container) {
     this.container = container;
     this.currentStep = 1;
