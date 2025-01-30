@@ -1,4 +1,70 @@
 const CONFIGURATOR_DATA = {
+  steps: [
+    {
+      id: 1,
+      name: 'Vehicle Selection',
+      type: 'select',
+      dataKey: 'vehicles',
+      required: true,
+      configKey: 'vehicle',
+      template: 'vehicle-select'
+    },
+    {
+      id: 2,
+      name: 'Build Type',
+      type: 'card-select',
+      dataKey: 'buildTypes',
+      required: true,
+      configKey: 'buildType',
+      template: 'build-type'
+    },
+    {
+      id: 3,
+      name: 'Tray Selection',
+      type: 'card-select',
+      dataKey: 'trays',
+      required: true,
+      configKey: 'tray',
+      template: 'tray',
+      showIf: (config) => config.buildType && ['tray-only', 'tray-canopy'].includes(config.buildType.id)
+    },
+    {
+      id: 4,
+      name: 'Canopy Selection',
+      type: 'card-select',
+      dataKey: 'canopies',
+      required: true,
+      configKey: 'canopy',
+      template: 'canopy',
+      showIf: (config) => config.buildType && config.buildType.id === 'tray-canopy'
+    },
+    {
+      id: 5,
+      name: 'Tray Sides',
+      type: 'card-select',
+      dataKey: 'traySides',
+      required: true,
+      configKey: 'traySides',
+      template: 'tray-sides',
+      showIf: (config) => config.buildType && ['tray-only', 'tray-canopy'].includes(config.buildType.id)
+    },
+    {
+      id: 6,
+      name: 'Accessories Selection',
+      type: 'multi-select',
+      dataKey: 'accessories',
+      required: false,
+      configKey: 'accessories',
+      template: 'accessories'
+    },
+    {
+      id: 7,
+      name: 'Summary',
+      type: 'summary',
+      required: true,
+      template: 'summary'
+    }
+  ],
   buildTypes: [
     {
       id: 'tray-only',
@@ -97,6 +163,65 @@ const CONFIGURATOR_DATA = {
       price: 4800,
       description: 'AS Aluminium Canopy 1700mm - Matte Black',
       weight: 95 // Weight in kg
+    }
+  ],
+
+  traySides: [
+    {
+      id: 1,
+      name: '300mm Sides',
+      image: 'https://placehold.co/400x300?text=300mm+Sides',
+      price: 500,
+      description: 'AS Aluminium Tray Sides 300mm - Matte Black',
+      height: 300 // Height in mm
+    },
+    {
+      id: 2,
+      name: '600mm Sides',
+      image: 'https://placehold.co/400x300?text=600mm+Sides',
+      price: 800,
+      description: 'AS Aluminium Tray Sides 600mm - Matte Black',
+      height: 600
+    },
+    {
+      id: 3,
+      name: '700mm Sides',
+      image: 'https://placehold.co/400x300?text=700mm+Sides',
+      price: 900,
+      description: 'AS Aluminium Tray Sides 700mm - Matte Black',
+      height: 700
+    },
+    {
+      id: 4,
+      name: '1000mm Sides',
+      image: 'https://placehold.co/400x300?text=1000mm+Sides',
+      price: 1200,
+      description: 'AS Aluminium Tray Sides 1000mm - Matte Black',
+      height: 1000
+    },
+    {
+      id: 5,
+      name: '1700mm Sides',
+      image: 'https://placehold.co/400x300?text=1700mm+Sides',
+      price: 1800,
+      description: 'AS Aluminium Tray Sides 1700mm - Matte Black',
+      height: 1700
+    },
+    {
+      id: 6,
+      name: '2000mm Sides',
+      image: 'https://placehold.co/400x300?text=2000mm+Sides',
+      price: 2000,
+      description: 'AS Aluminium Tray Sides 2000mm - Matte Black',
+      height: 2000
+    },
+    {
+      id: 7,
+      name: '2400mm Sides',
+      image: 'https://placehold.co/400x300?text=2400mm+Sides',
+      price: 2400,
+      description: 'AS Aluminium Tray Sides 2400mm - Matte Black',
+      height: 2400
     }
   ],
 

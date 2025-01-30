@@ -2,7 +2,8 @@ class ProductConfigurator {
   constructor(container) {
     this.container = container;
     this.currentStep = 1;
-    this.totalSteps = 6; 
+    this.steps = CONFIGURATOR_DATA.steps;
+    this.totalSteps = this.steps.length;
     this.totalPrice = 0;
     this.totalWeight = 0;
     this.configuration = {
@@ -10,6 +11,7 @@ class ProductConfigurator {
       buildType: null,
       tray: null,
       canopy: null,
+      traySides: null,
       accessories: []
     };
     
@@ -17,12 +19,73 @@ class ProductConfigurator {
   }
 
   init() {
+    this.generateStepHTML();
     this.setupEventListeners();
     this.renderCurrentStep();
     this.updateProgress();
   }
 
+  generateStepHTML() {
+    const container = this.container.querySelector('.configurator-container');
+    container.innerHTML = ''; // Clear existing content
+    
+    this.steps.forEach(step => {
+      const stepElement = document.createElement('div');
+      stepElement.className = 'configurator-step';
+      stepElement.setAttribute('data-step', step.id);
+      
+      stepElement.innerHTML = `
+        <h4>${step.name}</h4>
+        ${this.getStepContent(step)}
+        <div class="step-navigation">
+          ${step.id > 1 ? '<button class="button button--secondary" data-prev-step>Previous</button>' : ''}
+          ${step.id < this.totalSteps ? '<button class="button" data-next-step>Next</button>' : ''}
+          ${step.id === this.totalSteps ? '<button class="button" data-add-to-cart>Get Quote</button>' : ''}
+        </div>
+      `;
+      
+      container.appendChild(stepElement);
+    });
+  }
+
+  getStepContent(step) {
+    switch (step.template) {
+      case 'vehicle-select':
+        return `
+          <select class="vehicle-select" data-vehicle-select>
+            <option value="">Select a vehicle</option>
+          </select>
+          <div data-vehicle-details></div>
+        `;
+      case 'build-type':
+        return '<div class="build-type-options" data-build-type-options></div>';
+      case 'tray':
+        return '<div class="option-grid" data-tray-options></div>';
+      case 'canopy':
+        return '<div class="option-grid" data-canopy-options></div>';
+      case 'tray-sides':
+        return '<div class="option-grid" data-tray-sides-options></div>';
+      case 'accessories':
+        return '<div class="accessories-grid" data-accessories-options></div>';
+      case 'summary':
+        return '<div class="summary-container" data-summary></div>';
+      default:
+        return '';
+    }
+  }
+
   setupEventListeners() {
+    // Generic event delegation for all option selections
+    this.container.addEventListener('click', (e) => {
+      const optionCard = e.target.closest('.option-card');
+      if (optionCard) {
+        const currentStep = this.steps.find(s => s.id === this.currentStep);
+        if (currentStep) {
+          this.updateConfiguration(currentStep.id, optionCard.dataset.optionId, optionCard);
+        }
+      }
+    });
+
     // Vehicle selection
     const vehicleSelect = this.container.querySelector('[data-vehicle-select]');
     if (vehicleSelect) {
@@ -37,79 +100,61 @@ class ProductConfigurator {
       });
     }
 
-    // Build Type selection
-    const buildTypeContainer = this.container.querySelector('[data-build-type-options]');
-    if (buildTypeContainer) {
-      buildTypeContainer.addEventListener('click', (e) => {
-        const optionCard = e.target.closest('.option-card');
-        if (optionCard) {
-          const buildTypeId = optionCard.dataset.optionId;
-          this.updateConfiguration(2, buildTypeId, optionCard);
-        }
-      });
-    }
-
-    // Tray selection
-    const trayContainer = this.container.querySelector('[data-tray-options]');
-    if (trayContainer) {
-      trayContainer.addEventListener('click', (e) => {
-        const optionCard = e.target.closest('.option-card');
-        if (optionCard) {
-          const trayId = optionCard.dataset.optionId;
-          this.updateConfiguration(3, trayId, optionCard);
-        }
-      });
-    }
-
-    // Canopy selection
-    const canopyContainer = this.container.querySelector('[data-canopy-options]');
-    if (canopyContainer) {
-      canopyContainer.addEventListener('click', (e) => {
-        const optionCard = e.target.closest('.option-card');
-        if (optionCard) {
-          const canopyId = optionCard.dataset.optionId;
-          this.updateConfiguration(4, canopyId, optionCard);
-        }
-      });
-    }
-
-    // Accessories selection
-    const accessoriesContainer = this.container.querySelector('[data-accessories-options]');
-    if (accessoriesContainer) {
-      accessoriesContainer.addEventListener('click', (e) => {
-        const optionCard = e.target.closest('.option-card');
-        if (optionCard) {
-          const accessoryId = optionCard.dataset.optionId;
-          this.updateConfiguration(5, accessoryId, optionCard);
-        }
-      });
-    }
-
     // Navigation buttons
-    const prevButtons = this.container.querySelectorAll('[data-prev-step]');
-    const nextButtons = this.container.querySelectorAll('[data-next-step]');
-    
-    prevButtons.forEach(button => {
-      button.addEventListener('click', () => this.prevStep());
-    });
-    
-    nextButtons.forEach(button => {
-      button.addEventListener('click', () => this.nextStep());
+    this.container.addEventListener('click', (e) => {
+      if (e.target.matches('[data-prev-step]')) {
+        this.prevStep();
+      } else if (e.target.matches('[data-next-step]')) {
+        this.nextStep();
+      } else if (e.target.matches('[data-add-to-cart]')) {
+        this.handleAddToCart();
+      }
     });
 
-    // Summary button listener
-    const addToCartBtn = this.container.querySelector('[data-add-to-cart]');
-    if (addToCartBtn) {
-      addToCartBtn.addEventListener('click', () => this.showSummaryModal());
-    }
-
-    // Restart link listener
-    const restartLink = this.container.querySelector('[data-restart]');
-    if (restartLink) {
-      restartLink.addEventListener('click', (e) => {
+    // Restart button
+    const restartButton = this.container.querySelector('[data-restart]');
+    if (restartButton) {
+      restartButton.addEventListener('click', (e) => {
         e.preventDefault();
         this.restart();
       });
+    }
+  }
+
+  getVisibleSteps() {
+    return this.steps.filter(step => {
+      if (!step.showIf) return true;
+      return step.showIf(this.configuration);
+    });
+  }
+
+  getNextVisibleStep(currentStep) {
+    const visibleSteps = this.getVisibleSteps();
+    const currentIndex = visibleSteps.findIndex(step => step.id === currentStep);
+    return visibleSteps[currentIndex + 1]?.id;
+  }
+
+  getPrevVisibleStep(currentStep) {
+    const visibleSteps = this.getVisibleSteps();
+    const currentIndex = visibleSteps.findIndex(step => step.id === currentStep);
+    return visibleSteps[currentIndex - 1]?.id;
+  }
+
+  nextStep() {
+    const nextStep = this.getNextVisibleStep(this.currentStep);
+    if (nextStep) {
+      this.currentStep = nextStep;
+      this.renderCurrentStep();
+      this.updateProgress();
+    }
+  }
+
+  prevStep() {
+    const prevStep = this.getPrevVisibleStep(this.currentStep);
+    if (prevStep) {
+      this.currentStep = prevStep;
+      this.renderCurrentStep();
+      this.updateProgress();
     }
   }
 
@@ -171,63 +216,40 @@ class ProductConfigurator {
 
   renderCurrentStep() {
     const steps = this.container.querySelectorAll('.configurator-step');
-    steps.forEach(step => {
-      step.classList.remove('active');
-    });
+    steps.forEach(step => step.style.display = 'none');
 
-    const currentStep = this.container.querySelector(`[data-step="${this.currentStep}"]`);
-    if (currentStep) {
-      currentStep.classList.add('active');
-    }
+    const currentStep = this.steps.find(s => s.id === this.currentStep);
+    if (!currentStep) return;
 
-    switch (this.currentStep) {
-      case 1:
+    const stepElement = this.container.querySelector(`[data-step="${this.currentStep}"]`);
+    if (!stepElement) return;
+
+    stepElement.style.display = 'block';
+
+    // Render step-specific content
+    switch (currentStep.template) {
+      case 'vehicle-select':
         this.renderVehicles();
         break;
-      case 2:
+      case 'build-type':
         this.renderBuildTypes();
         break;
-      case 3:
+      case 'tray':
         this.renderTrays();
         break;
-      case 4:
+      case 'canopy':
         this.renderCanopies();
         break;
-      case 5:
+      case 'tray-sides':
+        this.renderTraySideOptions();
+        break;
+      case 'accessories':
         this.renderAccessories();
         break;
-      case 6:
+      case 'summary':
         this.renderSummary();
         break;
     }
-
-    // Update total price display
-    this.updateCurrentTotal();
-  }
-
-  setupAccessoryEventListeners() {
-    const accessoryCards = this.container.querySelectorAll('.option-card[data-option-id]');
-    accessoryCards.forEach(card => {
-      card.addEventListener('click', () => {
-        const id = parseInt(card.dataset.optionId);
-        const accessory = CONFIGURATOR_DATA.accessories.find(a => a.id === id);
-        
-        if (!accessory) return;
-
-        // Toggle accessory selection
-        if (this.configuration.accessories.some(a => a.id === id)) {
-          this.configuration.accessories = this.configuration.accessories.filter(a => a.id !== id);
-          card.classList.remove('selected');
-        } else {
-          this.configuration.accessories.push(accessory);
-          card.classList.add('selected');
-        }
-
-        this.updateTotalPrice();
-        this.updateCurrentTotal();
-        this.updateTotalWeight();
-      });
-    });
   }
 
   renderVehicles() {
@@ -315,6 +337,27 @@ class ProductConfigurator {
       .join('');
   }
 
+  renderTraySideOptions() {
+    const container = this.container.querySelector('[data-tray-sides-options]');
+    if (!container) return;
+
+    container.innerHTML = CONFIGURATOR_DATA.traySides
+      .map(side => `
+        <div class="option-card ${this.configuration.traySides?.id === side.id ? 'selected' : ''}" 
+             data-option-id="${side.id}">
+          <div class="option-image">
+            <img src="${side.image}" alt="${side.name}" loading="lazy">
+          </div>
+          <div class="option-details">
+            <h3>${side.name}</h3>
+            ${side.description ? `<p>${side.description}</p>` : ''}
+            ${side.price > 0 ? `<div class="option-price">$${side.price.toLocaleString()}</div>` : ''}
+          </div>
+        </div>
+      `)
+      .join('');
+  }
+
   renderAccessories() {
     const container = this.container.querySelector('[data-accessories-options]');
     if (!container) return;
@@ -339,210 +382,68 @@ class ProductConfigurator {
     this.setupAccessoryEventListeners();
   }
 
-  createOptionCard(option, isAccessory = false) {
-    const selected = this.isSelected(option) ? 'selected' : '';
-    return `
-      <div class="option-card ${selected}" data-option-id="${option.id}">
-        <div class="option-image">
-          <img src="${option.image}" alt="${option.name}" loading="lazy">
-        </div>
-        <div class="option-details">
-          <h3>${option.name}</h3>
-          ${option.description ? `<p>${option.description}</p>` : ''}
-          ${option.price > 0 ? `<div class="option-price">$${option.price.toLocaleString()}</div>` : ''}
-          ${isAccessory ? '<div class="option-toggle">Add to Build</div>' : ''}
-        </div>
-      </div>
-    `;
-  }
+  setupAccessoryEventListeners() {
+    const accessoryCards = this.container.querySelectorAll('.option-card[data-option-id]');
+    accessoryCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const id = parseInt(card.dataset.optionId);
+        const accessory = CONFIGURATOR_DATA.accessories.find(a => a.id === id);
+        
+        if (!accessory) return;
 
-  handleCategorySelection(categoryItem) {
-    const categoryId = categoryItem.dataset.categoryId;
-    const category = CONFIGURATOR_DATA.accessoryCategories
-      .find(cat => cat.id === categoryId);
+        // Toggle accessory selection
+        if (this.configuration.accessories.some(a => a.id === id)) {
+          this.configuration.accessories = this.configuration.accessories.filter(a => a.id !== id);
+          card.classList.remove('selected');
+        } else {
+          this.configuration.accessories.push(accessory);
+          card.classList.add('selected');
+        }
 
-    if (!category) return;
-
-    // Update active category
-    const categories = this.container.querySelectorAll('.category-item');
-    categories.forEach(cat => {
-      cat.classList.toggle('active', cat.dataset.categoryId === categoryId);
+        this.updateTotalPrice();
+        this.updateCurrentTotal();
+        this.updateTotalWeight();
+      });
     });
-
-    // Render accessories for this category
-    const optionsContainer = this.container.querySelector('[data-accessories-options]');
-    if (optionsContainer) {
-      optionsContainer.innerHTML = category.accessories
-        .map(accessory => {
-          const selected = this.configuration.accessories.some(a => a.id === accessory.id);
-          return `
-            <div class="option-card ${selected ? 'selected' : ''}" data-option-id="${accessory.id}">
-              <div class="option-image">
-                <img src="${accessory.image}" alt="${accessory.name}" loading="lazy">
-              </div>
-              <div class="option-details">
-                <h3>${accessory.name}</h3>
-                ${accessory.description ? `<p>${accessory.description}</p>` : ''}
-                ${accessory.price > 0 ? `<div class="option-price">$${accessory.price.toLocaleString()}</div>` : ''}
-                <div class="option-toggle">${selected ? 'Remove from Build' : 'Add to Build'}</div>
-              </div>
-            </div>
-          `;
-        })
-        .join('');
-    }
   }
 
-  handleVehicleSelection(vehicle) {
-    if (!vehicle) {
-      this.configuration.vehicle = null;
-      const detailsContainer = this.container.querySelector('[data-vehicle-details]');
-      if (detailsContainer) {
-        detailsContainer.innerHTML = '';
+  updateConfiguration(stepId, optionId, element) {
+    const step = this.steps.find(s => s.id === stepId);
+    if (!step) return;
+
+    const dataKey = step.dataKey;
+    const configKey = step.configKey;
+
+    if (configKey === 'accessories') {
+      // Handle multi-select for accessories
+      element.classList.toggle('selected');
+      const accessory = CONFIGURATOR_DATA[dataKey].find(a => a.id === optionId);
+      
+      if (element.classList.contains('selected')) {
+        if (!this.configuration.accessories.find(a => a.id === accessory.id)) {
+          this.configuration.accessories.push(accessory);
+        }
+      } else {
+        this.configuration.accessories = this.configuration.accessories.filter(a => a.id !== accessory.id);
       }
     } else {
-      this.configuration.vehicle = vehicle;
-      this.renderVehicleDetails(vehicle);
-      
-      // Clear other selections when vehicle changes
-      this.configuration.tray = null;
-      this.configuration.canopy = null;
-      this.configuration.accessories = [];
-      
-      // Reset displays for other steps
-      const trayOptions = this.container.querySelector('[data-tray-options]');
-      const canopyOptions = this.container.querySelector('[data-canopy-options]');
-      const accessoryOptions = this.container.querySelector('[data-accessories-options]');
-      
-      if (trayOptions) trayOptions.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
-      if (canopyOptions) canopyOptions.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
-      if (accessoryOptions) accessoryOptions.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+      // Handle single-select for other options
+      const siblings = element.parentElement.querySelectorAll('.option-card');
+      siblings.forEach(card => card.classList.remove('selected'));
+      element.classList.add('selected');
+
+      const selectedOption = CONFIGURATOR_DATA[dataKey].find(item => {
+        if (typeof item.id === 'number') {
+          return item.id === Number(optionId);
+        }
+        return item.id === optionId;
+      });
+
+      this.configuration[configKey] = selectedOption;
     }
-    
+
     this.updateTotalPrice();
-    this.updateCurrentTotal();
     this.updateTotalWeight();
-  }
-
-  updateConfiguration(step, id, optionCard) {
-    switch (step) {
-      case 1:
-        // Vehicle selection is handled separately
-        break;
-      case 2:
-        // Build Type selection
-        const buildType = CONFIGURATOR_DATA.buildTypes.find(b => b.id === id);
-        if (buildType) {
-          this.configuration.buildType = buildType;
-          // Clear subsequent selections when build type changes
-          this.configuration.tray = null;
-          this.configuration.canopy = null;
-          this.configuration.accessories = [];
-          
-          // Update UI
-          const container = optionCard.closest('[data-step]');
-          container.querySelectorAll('.option-card').forEach(card => {
-            card.classList.remove('selected');
-          });
-          optionCard.classList.add('selected');
-        }
-        break;
-      case 3:
-        // Tray selection
-        if (this.configuration.buildType && this.configuration.buildType.id !== 'service-body') {
-          const tray = CONFIGURATOR_DATA.trays.find(t => t.id === Number(id));
-          if (tray) {
-            this.configuration.tray = tray;
-            // Update UI
-            const trayContainer = optionCard.closest('[data-step]');
-            trayContainer.querySelectorAll('.option-card').forEach(card => {
-              card.classList.remove('selected');
-            });
-            optionCard.classList.add('selected');
-            this.updateTotalWeight();
-          }
-        }
-        break;
-      case 4:
-        // Canopy selection (only for tray-canopy build type)
-        if (this.configuration.buildType && this.configuration.buildType.id === 'tray-canopy') {
-          const canopy = CONFIGURATOR_DATA.canopies.find(c => c.id === Number(id));
-          if (canopy) {
-            this.configuration.canopy = canopy;
-            // Update UI
-            const canopyContainer = optionCard.closest('[data-step]');
-            canopyContainer.querySelectorAll('.option-card').forEach(card => {
-              card.classList.remove('selected');
-            });
-            optionCard.classList.add('selected');
-            this.updateTotalWeight();
-          }
-        }
-        break;
-      case 5:
-        // Accessories
-        const accessory = CONFIGURATOR_DATA.accessories.find(a => a.id === id);
-        if (accessory) {
-          const index = this.configuration.accessories.findIndex(a => a.id === id);
-          if (index === -1) {
-            this.configuration.accessories.push(accessory);
-            optionCard.classList.add('selected');
-          } else {
-            this.configuration.accessories.splice(index, 1);
-            optionCard.classList.remove('selected');
-          }
-          this.updateTotalWeight();
-        }
-        break;
-    }
-
-    this.updateTotalPrice();
-    this.updateCurrentTotal();
-  }
-
-  shouldShowStep(step) {
-    switch (step) {
-      case 1: // Vehicle Selection
-        return true;
-      case 2: // Build Type
-        return true;
-      case 3: // Tray Selection
-        return this.configuration.buildType && this.configuration.buildType.id !== 'service-body';
-      case 4: // Canopy Selection
-        return this.configuration.buildType && this.configuration.buildType.id === 'tray-canopy';
-      case 5: // Accessories
-        return true;
-      case 6: // Summary
-        return true;
-      default:
-        return false;
-    }
-  }
-
-  nextStep() {
-    let nextStep = this.currentStep + 1;
-    while (nextStep <= this.totalSteps && !this.shouldShowStep(nextStep)) {
-      nextStep++;
-    }
-    
-    if (nextStep <= this.totalSteps) {
-      this.currentStep = nextStep;
-      this.renderCurrentStep();
-      this.updateProgress();
-    }
-  }
-
-  prevStep() {
-    let prevStep = this.currentStep - 1;
-    while (prevStep >= 1 && !this.shouldShowStep(prevStep)) {
-      prevStep--;
-    }
-    
-    if (prevStep >= 1) {
-      this.currentStep = prevStep;
-      this.renderCurrentStep();
-      this.updateProgress();
-    }
   }
 
   renderVehicleDetails(vehicle) {
@@ -561,43 +462,46 @@ class ProductConfigurator {
   }
 
   updateTotalPrice() {
-    this.totalPrice = 0;
+    let total = 0;
     
     // Add vehicle price if selected
     if (this.configuration.vehicle) {
-      this.totalPrice += this.configuration.vehicle.price || 0;
-    }
-    
-    // Add build type price if selected
-    if (this.configuration.buildType) {
-      this.totalPrice += this.configuration.buildType.price || 0;
+      total += this.configuration.vehicle.price;
     }
     
     // Add tray price if selected
     if (this.configuration.tray) {
-      this.totalPrice += this.configuration.tray.price || 0;
+      total += this.configuration.tray.price;
     }
     
     // Add canopy price if selected
     if (this.configuration.canopy) {
-      this.totalPrice += this.configuration.canopy.price || 0;
+      total += this.configuration.canopy.price;
+    }
+
+    // Add tray sides price if selected
+    if (this.configuration.traySides) {
+      total += this.configuration.traySides.price;
     }
     
     // Add accessories prices
     if (this.configuration.accessories.length > 0) {
-      this.configuration.accessories.forEach(accessory => {
-        this.totalPrice += accessory.price || 0;
-      });
+      total += this.configuration.accessories.reduce((sum, acc) => sum + acc.price, 0);
     }
-
-    // Update the current total display
-    this.updateCurrentTotal();
+    
+    this.totalPrice = total;
+    
+    // Update price display
+    const priceDisplay = this.container.querySelector('[data-current-total]');
+    if (priceDisplay) {
+      priceDisplay.textContent = `$${total.toFixed(2)}`;
+    }
   }
 
   updateCurrentTotal() {
     const currentTotalElement = this.container.querySelector('[data-current-total]');
     if (currentTotalElement) {
-      currentTotalElement.textContent = `$${this.totalPrice.toLocaleString()}`;
+      currentTotalElement.textContent = `$${this.totalPrice.toFixed(2)}`;
     }
   }
 
@@ -622,6 +526,11 @@ class ProductConfigurator {
     // Add canopy weight
     if (this.configuration.canopy) {
       this.totalWeight += this.configuration.canopy.weight || 0;
+    }
+
+    // Add tray sides weight
+    if (this.configuration.traySides) {
+      this.totalWeight += this.configuration.traySides.weight || 0;
     }
 
     // Add accessories weight
@@ -728,6 +637,22 @@ class ProductConfigurator {
       `;
     }
 
+    // Tray Sides
+    if (this.configuration.traySides) {
+      summaryHtml += `
+        <div class="summary-section">
+          <h3>Tray Sides</h3>
+          <div class="summary-item">
+            <div class="summary-item-details">
+              <div class="summary-item-name">${this.configuration.traySides.name}</div>
+              <div class="summary-item-description">${this.configuration.traySides.description}</div>
+            </div>
+            <div class="summary-item-price">$${(this.configuration.traySides.price || 0).toLocaleString()}</div>
+          </div>
+        </div>
+      `;
+    }
+
     // Accessories
     if (this.configuration.accessories && this.configuration.accessories.length > 0) {
       summaryHtml += '<div class="summary-section"><h3>Accessories</h3>';
@@ -752,7 +677,7 @@ class ProductConfigurator {
     // Update the total price display
     const totalPriceContainer = this.container.querySelector('[data-total-price]');
     if (totalPriceContainer) {
-      totalPriceContainer.textContent = `Total: $${this.totalPrice.toLocaleString()}`;
+      totalPriceContainer.textContent = `Total: $${this.totalPrice.toFixed(2)}`;
     }
   }
 
@@ -807,6 +732,7 @@ class ProductConfigurator {
       buildType: null,
       tray: null,
       canopy: null,
+      traySides: null,
       accessories: []
     };
     
@@ -838,6 +764,18 @@ class ProductConfigurator {
     this.currentStep = 1;
     this.renderCurrentStep();
     this.updateProgress();
+  }
+
+  createOptionCard(option) {
+    return `
+      <div class="option-card ${this.configuration.traySides?.id === option.id ? 'selected' : ''}" 
+           data-option-id="${option.id}">
+        <img src="${option.image}" alt="${option.name}">
+        <h3>${option.name}</h3>
+        <p>${option.description}</p>
+        <p class="price">$${option.price.toFixed(2)}</p>
+      </div>
+    `;
   }
 }
 
