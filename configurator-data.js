@@ -57,9 +57,19 @@ const CONFIGURATOR_DATA = {
       configKey: 'passengerFitout',
       template: 'passenger-fitout',
       showIf: (config) => config.buildType && ['tray-canopy', 'service-body'].includes(config.buildType.id)
-    },  
+    },
     {
       id: 7,
+      name: 'Driver Side Fitout',
+      type: 'card-select',
+      dataKey: 'driverFitout',
+      required: true,
+      configKey: 'driverFitout',
+      template: 'driver-fitout',
+      showIf: (config) => config.buildType && ['tray-canopy', 'service-body'].includes(config.buildType.id)
+    },
+    {
+      id: 8,
       name: 'External Accessories',
       type: 'multi-select',
       dataKey: 'accessories',
@@ -69,7 +79,7 @@ const CONFIGURATOR_DATA = {
       showIf: (config) => config.buildType && ['tray-canopy', 'service-body'].includes(config.buildType.id)
     },
     {
-      id: 8,
+      id: 9,
       name: 'Summary',
       type: 'summary',
       required: true,
@@ -256,6 +266,32 @@ const CONFIGURATOR_DATA = {
       id: 3,
       name: 'Empty Fitout',
       image: 'https://placehold.co/400x300?text=Empty+Fitout',
+      description: '',
+      price: 0,
+      weight: 0 
+    }
+  ],
+  driverFitout: [
+    {
+      id: 1,
+      name: '1600 Fitout - No Pantry',
+      image: 'https://placehold.co/400x300?text=1600+Driver+Fitout',
+      description: '',
+      price: 1000,
+      weight: 100 
+    },
+    {
+      id: 2,
+      name: '1400 Fitout - With Pantry',
+      image: 'https://placehold.co/400x300?text=1400+Driver+Fitout',
+      description: '',
+      price: 1200,
+      weight: 100 
+    },
+    {
+      id: 3,
+      name: 'Empty Fitout',
+      image: 'https://placehold.co/400x300?text=Empty+Driver+Fitout',
       description: '',
       price: 0,
       weight: 0 

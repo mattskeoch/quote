@@ -13,6 +13,7 @@ class ProductConfigurator {
       canopy: null,
       traySides: null,
       passengerFitout: null,
+      driverFitout: null,
       accessories: []
     };
     
@@ -68,6 +69,8 @@ class ProductConfigurator {
         return '<div class="option-grid" data-tray-sides-options></div>';
       case 'passenger-fitout':
         return '<div class="option-grid" data-passenger-fitout-options></div>';
+      case 'driver-fitout':
+        return '<div class="option-grid" data-driver-fitout-options></div>';
       case 'accessories':
         return '<div class="accessories-grid" data-accessories-options></div>';
       case 'summary':
@@ -249,6 +252,9 @@ class ProductConfigurator {
       case 'passenger-fitout':
         this.renderPassengerFitout();
         break;
+      case 'driver-fitout':
+        this.renderDriverFitout();
+        break;
       case 'accessories':
         this.renderAccessories();
         break;
@@ -371,6 +377,27 @@ class ProductConfigurator {
     container.innerHTML = CONFIGURATOR_DATA.passengerFitout
       .map(fitout => `
         <div class="option-card ${this.configuration.passengerFitout?.id === fitout.id ? 'selected' : ''}" 
+             data-option-id="${fitout.id}">
+          <div class="option-image">
+            <img src="${fitout.image}" alt="${fitout.name}" loading="lazy">
+          </div>
+          <div class="option-details">
+            <h3>${fitout.name}</h3>
+            ${fitout.description ? `<p>${fitout.description}</p>` : ''}
+            ${fitout.price > 0 ? `<div class="option-price">$${fitout.price.toLocaleString()}</div>` : ''}
+          </div>
+        </div>
+      `)
+      .join('');
+  }
+
+  renderDriverFitout() {
+    const container = this.container.querySelector('[data-driver-fitout-options]');
+    if (!container) return;
+
+    container.innerHTML = CONFIGURATOR_DATA.driverFitout
+      .map(fitout => `
+        <div class="option-card ${this.configuration.driverFitout?.id === fitout.id ? 'selected' : ''}" 
              data-option-id="${fitout.id}">
           <div class="option-image">
             <img src="${fitout.image}" alt="${fitout.name}" loading="lazy">
@@ -515,6 +542,11 @@ class ProductConfigurator {
     if (this.configuration.passengerFitout) {
       total += this.configuration.passengerFitout.price;
     }
+
+    // Add driver fitout price if selected
+    if (this.configuration.driverFitout) {
+      total += this.configuration.driverFitout.price;
+    }
     
     // Add accessories prices
     if (this.configuration.accessories.length > 0) {
@@ -522,12 +554,7 @@ class ProductConfigurator {
     }
     
     this.totalPrice = total;
-    
-    // Update price display
-    const priceDisplay = this.container.querySelector('[data-current-total]');
-    if (priceDisplay) {
-      priceDisplay.textContent = `$${total.toFixed(2)}`;
-    }
+    this.updateCurrentTotal();
   }
 
   updateCurrentTotal() {
@@ -568,6 +595,11 @@ class ProductConfigurator {
     // Add passenger fitout weight
     if (this.configuration.passengerFitout) {
       this.totalWeight += this.configuration.passengerFitout.weight || 0;
+    }
+
+    // Add driver fitout weight
+    if (this.configuration.driverFitout) {
+      this.totalWeight += this.configuration.driverFitout.weight || 0;
     }
 
     // Add accessories weight
@@ -706,6 +738,22 @@ class ProductConfigurator {
       `;
     }
 
+    // Driver Fitout
+    if (this.configuration.driverFitout) {
+      summaryHtml += `
+        <div class="summary-section">
+          <h3>Driver Fitout</h3>
+          <div class="summary-item">
+            <div class="summary-item-details">
+              <div class="summary-item-name">${this.configuration.driverFitout.name}</div>
+              <div class="summary-item-description">${this.configuration.driverFitout.description}</div>
+            </div>
+            <div class="summary-item-price">$${(this.configuration.driverFitout.price || 0).toLocaleString()}</div>
+          </div>
+        </div>
+      `;
+    }
+
     // Accessories
     if (this.configuration.accessories && this.configuration.accessories.length > 0) {
       summaryHtml += '<div class="summary-section"><h3>Accessories</h3>';
@@ -786,6 +834,8 @@ class ProductConfigurator {
       tray: null,
       canopy: null,
       traySides: null,
+      passengerFitout: null,
+      driverFitout: null,
       accessories: []
     };
     

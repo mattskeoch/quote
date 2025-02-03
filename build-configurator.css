@@ -12,6 +12,16 @@
   margin-bottom: 4rem;
 }
 
+.configurator-logo {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.configurator-logo img {
+  width: 160px;
+  height: auto;
+}
+
 /* Progress Bar */
 .configurator-progress {
   margin-bottom: 6rem;
@@ -321,7 +331,7 @@
 }
 
 .summary-section h3 {
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: #333;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
@@ -551,4 +561,24 @@
 
 .configurator-step.active {
   display: block;
+}
+
+.quote-builder-page {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  min-height: 100vh;
+}
+
+.quote-builder-page .product-configurator {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.product-configurator ~ .google-rating-wrapper,
+.product-configurator + .google-rating-wrapper,
+body:has(.product-configurator) .google-rating-wrapper {
+  display: none !important;
 }
