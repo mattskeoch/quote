@@ -25,10 +25,14 @@ class ProductConfigurator {
     this.setupEventListeners();
     this.renderCurrentStep();
     this.updateProgress();
+    this.updateTotalPrice();
+    this.updateTotalWeight();
   }
 
   generateStepHTML() {
     const container = this.container.querySelector('.configurator-container');
+    if (!container) return;
+    
     container.innerHTML = ''; // Clear existing content
     
     this.steps.forEach(step => {
@@ -42,7 +46,7 @@ class ProductConfigurator {
         <div class="step-navigation">
           ${step.id > 1 ? '<button class="button button--secondary" data-prev-step>Previous</button>' : ''}
           ${step.id < this.totalSteps ? '<button class="button" data-next-step>Next</button>' : ''}
-          ${step.id === this.totalSteps ? '<button class="button" data-add-to-cart>Get Quote</button>' : ''}
+          ${step.id === this.totalSteps ? '<button class="button" data-get-quote>Get Quote</button>' : ''}
         </div>
       `;
       
@@ -112,8 +116,8 @@ class ProductConfigurator {
         this.prevStep();
       } else if (e.target.matches('[data-next-step]')) {
         this.nextStep();
-      } else if (e.target.matches('[data-add-to-cart]')) {
-        this.handleAddToCart();
+      } else if (e.target.matches('[data-get-quote]')) {
+        this.handleGetQuote();
       }
     });
 
@@ -205,7 +209,7 @@ class ProductConfigurator {
   updateNavigationButtons() {
     const prevBtn = this.container.querySelector('[data-prev-step]');
     const nextBtn = this.container.querySelector('[data-next-step]');
-    const addToCartBtn = this.container.querySelector('[data-add-to-cart]');
+    const getQuoteBtn = this.container.querySelector('[data-get-quote]');
 
     if (prevBtn) {
       prevBtn.style.display = this.currentStep > 1 ? 'block' : 'none';
@@ -215,8 +219,8 @@ class ProductConfigurator {
       nextBtn.style.display = this.currentStep < this.totalSteps ? 'block' : 'none';
     }
 
-    if (addToCartBtn) {
-      addToCartBtn.style.display = this.currentStep === this.totalSteps ? 'block' : 'none';
+    if (getQuoteBtn) {
+      getQuoteBtn.style.display = this.currentStep === this.totalSteps ? 'block' : 'none';
     }
   }
 
@@ -782,6 +786,83 @@ class ProductConfigurator {
     }
   }
 
+  initSummary() {
+    const summaryContainer = this.container.querySelector('[data-summary]');
+    if (!summaryContainer) return;
+
+    summaryContainer.innerHTML = this.generateSummaryHTML();
+    
+    // Add quote button click handler
+    const quoteButton = summaryContainer.querySelector('[data-get-quote]');
+    if (quoteButton) {
+      quoteButton.addEventListener('click', this.openQuoteModal.bind(this));
+    }
+  }
+
+  openQuoteModal() {
+    const modal = document.getElementById('quoteModal');
+    if (!modal) return;
+
+    // Add active class to trigger fade-in
+    modal.classList.add('active');
+
+    // Handle close button click
+    const closeBtn = modal.querySelector('.close-modal');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => this.closeQuoteModal(modal));
+    }
+
+    // Handle overlay click
+    const overlay = modal.querySelector('.quote-modal-overlay');
+    if (overlay) {
+      overlay.addEventListener('click', () => this.closeQuoteModal(modal));
+    }
+
+    // Handle form submission
+    const form = modal.querySelector('#quoteForm');
+    if (form) {
+      form.addEventListener('submit', this.handleQuoteSubmit.bind(this));
+    }
+
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeQuoteModal(modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  handleQuoteSubmit(event) {
+    event.preventDefault();
+    
+    const formData = new FormData(event.target);
+    const quoteData = {
+      firstName: formData.get('firstName'),
+      lastName: formData.get('lastName'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      state: formData.get('state'),
+      vehicleDetails: formData.get('vehicleDetails'),
+      configuration: this.configuration,
+      totalPrice: this.totalPrice,
+      totalWeight: this.totalWeight
+    };
+
+    // Here you can handle the form submission
+    console.log('Quote Request:', quoteData);
+    
+    // Close the modal
+    this.closeQuoteModal(document.getElementById('quoteModal'));
+    
+    // Show success message
+    alert('Thank you! Your quote request has been submitted.');
+  }
+
+  handleGetQuote() {
+    this.openQuoteModal();
+  }
+
   showStep(step) {
     this.container.querySelectorAll('.configurator-step').forEach(s => {
       if (parseInt(s.dataset.step) === step) {
@@ -799,11 +880,11 @@ class ProductConfigurator {
     // Update button visibility
     const prevButton = this.container.querySelector('[data-prev-step]');
     const nextButton = this.container.querySelector('[data-next-step]');
-    const addToCartButton = this.container.querySelector('[data-add-to-cart]');
+    const getQuoteButton = this.container.querySelector('[data-get-quote]');
 
     if (prevButton) prevButton.style.display = step > 1 ? 'block' : 'none';
     if (nextButton) nextButton.style.display = step < this.totalSteps ? 'block' : 'none';
-    if (addToCartButton) addToCartButton.style.display = step === this.totalSteps ? 'block' : 'none';
+    if (getQuoteButton) getQuoteButton.style.display = step === this.totalSteps ? 'block' : 'none';
 
     this.renderCurrentStep();
   }

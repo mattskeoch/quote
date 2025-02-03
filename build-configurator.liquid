@@ -37,6 +37,51 @@
   </div>
 </div>
 
+<div class="quote-modal" id="quoteModal">
+  <div class="quote-modal-overlay"></div>
+  <div class="quote-modal-content">
+    <button class="close-modal" aria-label="Close modal">&times;</button>
+    <h2>Get Your Quote</h2>
+    <form id="quoteForm" class="quote-form">
+      <div class="form-group">
+        <label for="firstName">First Name *</label>
+        <input type="text" id="firstName" name="firstName" required>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name *</label>
+        <input type="text" id="lastName" name="lastName" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone *</label>
+        <input type="tel" id="phone" name="phone" required>
+      </div>
+      <div class="form-group">
+        <label for="state">State *</label>
+        <select id="state" name="state" required>
+          <option value="">Select a state</option>
+          <option value="ACT">Australian Capital Territory</option>
+          <option value="NSW">New South Wales</option>
+          <option value="NT">Northern Territory</option>
+          <option value="QLD">Queensland</option>
+          <option value="SA">South Australia</option>
+          <option value="TAS">Tasmania</option>
+          <option value="VIC">Victoria</option>
+          <option value="WA">Western Australia</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="vehicleDetails">Tell us about your vehicle</label>
+        <textarea id="vehicleDetails" name="vehicleDetails" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="submit-quote">Submit Quote Request</button>
+    </form>
+  </div>
+</div>
+
 {{ 'configurator-data.js' | asset_url | script_tag }}
 {{ 'build-configurator.js' | asset_url | script_tag }}
 
