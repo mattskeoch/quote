@@ -9,7 +9,10 @@
   </a>
 
   <div class="configurator-logo">
-    <img src="https://cdn.shopify.com/s/files/1/0580/6050/5263/files/AUTOSPEC4x4_ASPEC_LOGO_RED_BLACK.png?v=1722383489" alt="AutoSpec Logo" width="160">
+   <a href="https://autospec4x4.com.au/">
+    <img src="https://cdn.shopify.com/s/files/1/0580/6050/5263/files/AUTOSPEC4x4_ASPEC_LOGO_RED_BLACK.png?v=1722383489" 
+    alt="AutoSpec Logo" width="160"></a>
+   </a>
   </div>
 
   <h1 class="configurator-title">{{ section.settings.configurator_title }}</h1>
@@ -40,7 +43,7 @@
 <div class="quote-modal" id="quoteModal">
   <div class="quote-modal-overlay"></div>
   <div class="quote-modal-content">
-    <button class="close-modal" aria-label="Close modal">&times;</button>
+    <span class="close-modal">&times;</span>
     <h2>Get Your Quote</h2>
     <form id="quoteForm" class="quote-form">
       <div class="form-group">
@@ -84,6 +87,13 @@
 
 {{ 'configurator-data.js' | asset_url | script_tag }}
 {{ 'build-configurator.js' | asset_url | script_tag }}
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript">
+  (function() {
+    emailjs.init("YOUR_PUBLIC_KEY");
+  })();
+</script>
 
 {% schema %}
 {

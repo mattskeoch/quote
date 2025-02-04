@@ -144,7 +144,7 @@
 
 .option-details h3 {
   margin: 0 0 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   color: #333;
 }
 
@@ -583,6 +583,14 @@ body:has(.product-configurator) .google-rating-wrapper {
   display: none !important;
 }
 
+/* Hide specific sections when configurator is present */
+body:has(.product-configurator) .shopify-section-group-footer-group.cc-footer,
+body:has(.product-configurator) .shopify-section-group-footer-group.cc-icons-with-text,
+body:has(.product-configurator) .shopify-section-group-header-group.cc-header.cc-header--sticky,
+body:has(.product-configurator) .announcement.block.text-body-small {
+  display: none !important;
+}
+
 /* Quote Modal Styles */
 .quote-modal {
   display: none;
@@ -679,6 +687,34 @@ body:has(.product-configurator) .google-rating-wrapper {
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s;
+}
+
+.submit-quote.loading {
+  position: relative;
+  color: transparent;
+}
+
+.submit-quote.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spinner 0.6s linear infinite;
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+.quote-form.submitting {
+  opacity: 0.7;
+  pointer-events: none;
 }
 
 .submit-quote:hover {

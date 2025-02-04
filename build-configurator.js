@@ -818,12 +818,6 @@ class ProductConfigurator {
       overlay.addEventListener('click', () => this.closeQuoteModal(modal));
     }
 
-    // Handle form submission
-    const form = modal.querySelector('#quoteForm');
-    if (form) {
-      form.addEventListener('submit', this.handleQuoteSubmit.bind(this));
-    }
-
     // Prevent body scroll
     document.body.style.overflow = 'hidden';
   }
@@ -833,30 +827,8 @@ class ProductConfigurator {
     document.body.style.overflow = '';
   }
 
-  handleQuoteSubmit(event) {
+  async handleQuoteSubmit(event) {
     event.preventDefault();
-    
-    const formData = new FormData(event.target);
-    const quoteData = {
-      firstName: formData.get('firstName'),
-      lastName: formData.get('lastName'),
-      email: formData.get('email'),
-      phone: formData.get('phone'),
-      state: formData.get('state'),
-      vehicleDetails: formData.get('vehicleDetails'),
-      configuration: this.configuration,
-      totalPrice: this.totalPrice,
-      totalWeight: this.totalWeight
-    };
-
-    // Here you can handle the form submission
-    console.log('Quote Request:', quoteData);
-    
-    // Close the modal
-    this.closeQuoteModal(document.getElementById('quoteModal'));
-    
-    // Show success message
-    alert('Thank you! Your quote request has been submitted.');
   }
 
   handleGetQuote() {
