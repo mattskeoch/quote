@@ -41,7 +41,10 @@ class ProductConfigurator {
       stepElement.setAttribute('data-step', step.id);
       
       stepElement.innerHTML = `
-        <h5>${step.name}</h5>
+        <div class="step-header">
+          <h5>${step.name}</h5>
+          ${step.description ? `<p class="step-description">${step.description}</p>` : ''}
+        </div>
         ${this.getStepContent(step)}
         <div class="step-navigation">
           ${step.id > 1 ? '<button class="button button--secondary" data-prev-step>Previous</button>' : ''}
@@ -102,10 +105,16 @@ class ProductConfigurator {
       vehicleSelect.addEventListener('change', (e) => {
         const selectedVehicle = CONFIGURATOR_DATA.vehicles.find(v => v.id === Number(e.target.value));
         if (selectedVehicle) {
+          // Clear tray selection if it doesn't match the new vehicle's tray size
+          if (this.configuration.tray && this.configuration.tray.traySize !== selectedVehicle.traySize) {
+            this.configuration.tray = null;
+          }
           this.configuration.vehicle = selectedVehicle;
           this.renderVehicleDetails(selectedVehicle);
+          this.updateStepTitles();
           this.updateTotalPrice();
           this.updateTotalWeight();
+          this.nextStep();
         }
       });
     }
@@ -128,6 +137,17 @@ class ProductConfigurator {
         e.preventDefault();
         this.restart();
       });
+    }
+  }
+
+  updateStepTitles() {
+    if (this.configuration.vehicle) {
+      const buildTypeStep = this.container.querySelector('[data-step="2"] h5');
+      if (buildTypeStep) {
+        // Split the vehicle name and take first two words
+        const vehicleName = this.configuration.vehicle.name.split(' ').slice(0, 2).join(' ');
+        buildTypeStep.textContent = `Let's Select the Build Type for your ${vehicleName}`;
+      }
     }
   }
 
@@ -315,7 +335,22 @@ class ProductConfigurator {
     const container = this.container.querySelector('[data-tray-options]');
     if (!container) return;
 
-    container.innerHTML = CONFIGURATOR_DATA.trays
+    if (!this.configuration.vehicle) {
+      container.innerHTML = '<div class="no-options-message">Please select a vehicle first.</div>';
+      return;
+    }
+
+    // Filter trays to only show compatible ones
+    const compatibleTrays = CONFIGURATOR_DATA.trays.filter(
+      tray => tray.traySize === this.configuration.vehicle.traySize
+    );
+
+    if (compatibleTrays.length === 0) {
+      container.innerHTML = '<div class="no-options-message">No compatible trays available for this vehicle.</div>';
+      return;
+    }
+
+    container.innerHTML = compatibleTrays
       .map(tray => `
         <div class="option-card ${this.configuration.tray?.id === tray.id ? 'selected' : ''}" 
              data-option-id="${tray.id}">

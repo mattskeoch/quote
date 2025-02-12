@@ -7,16 +7,18 @@ const CONFIGURATOR_DATA = {
       dataKey: 'vehicles',
       required: true,
       configKey: 'vehicle',
-      template: 'vehicle-select'
+      template: 'vehicle-select',
+      description: 'Choose your and lets get started!'
     },
     {
       id: 2,
-      name: 'Build Type',
+      name: 'Let\'s Select the Build Type',
       type: 'card-select',
       dataKey: 'buildTypes',
       required: true,
       configKey: 'buildType',
-      template: 'build-type'
+      template: 'build-type',
+      description: ''
     },
     {
       id: 3,
@@ -26,6 +28,7 @@ const CONFIGURATOR_DATA = {
       required: true,
       configKey: 'tray',
       template: 'tray',
+      description: 'Tray size is selected based on your vehicle.',
       showIf: (config) => config.buildType && ['tray-only', 'tray-canopy'].includes(config.buildType.id)
     },
     {
@@ -36,6 +39,7 @@ const CONFIGURATOR_DATA = {
       required: true,
       configKey: 'canopy',
       template: 'canopy',
+      description: '',
       showIf: (config) => config.buildType && config.buildType.id === 'tray-canopy'
     },
     {
@@ -46,6 +50,7 @@ const CONFIGURATOR_DATA = {
       required: true,
       configKey: 'traySides',
       template: 'tray-sides',
+      description: '',
       showIf: (config) => config.buildType && ['tray-only', 'tray-canopy'].includes(config.buildType.id)
     },
     {
@@ -56,6 +61,7 @@ const CONFIGURATOR_DATA = {
       required: true,
       configKey: 'passengerFitout',
       template: 'passenger-fitout',
+      description: '',
       showIf: (config) => config.buildType && ['tray-canopy', 'service-body'].includes(config.buildType.id)
     },
     {
@@ -66,6 +72,7 @@ const CONFIGURATOR_DATA = {
       required: true,
       configKey: 'driverFitout',
       template: 'driver-fitout',
+      description: '',
       showIf: (config) => config.buildType && ['tray-canopy', 'service-body'].includes(config.buildType.id)
     },
     {
@@ -76,6 +83,7 @@ const CONFIGURATOR_DATA = {
       required: false,
       configKey: 'accessories',
       template: 'accessories',
+      description: '',
       showIf: (config) => config.buildType && ['tray-canopy', 'service-body'].includes(config.buildType.id)
     },
     {
@@ -83,7 +91,8 @@ const CONFIGURATOR_DATA = {
       name: 'Summary',
       type: 'summary',
       required: true,
-      template: 'summary'
+      template: 'summary',
+      description: 'Review your complete build and proceed to get a quote.'
     }
   ],
   buildTypes: [
@@ -109,53 +118,68 @@ const CONFIGURATOR_DATA = {
   vehicles: [
     {
       id: 1,
-      name: 'Toyota Hilux',
-      image: 'https://placehold.co/400x300?text=Toyota+Hilux',
+      name: 'Toyota Hilux - Dual Cab',
+      image: 'https://placehold.co/400x300?text=Toyota+Hilux+DC',
       description: 'Dual Cab',
       price: 0,
-      gvm: 3000 // GVM in kg
+      gvm: 3000, 
+      traySize: '1700'
     },
     {
       id: 2,
+      name: 'Toyota Hilux - Space Cab',
+      image: 'https://placehold.co/400x300?text=Toyota+Hilux-SC',
+      description: 'Space Cab',
+      price: 0,
+      gvm: 3200, 
+      traySize: '2000'
+    },
+    {
+      id: 3,
       name: 'Ford Ranger',
       image: 'https://placehold.co/400x300?text=Ford+Ranger',
       description: 'Dual Cab',
       price: 0,
-      gvm: 3200 // GVM in kg
+      gvm: 3200, 
+      traySize: '1700'
     },
     {
-      id: 3,
+      id: 4,
       name: 'Isuzu D-Max',
       image: 'https://placehold.co/400x300?text=Isuzu+D-Max',
       description: 'Dual Cab',
       price: 0,
-      gvm: 2900 // GVM in kg
+      gvm: 2900, 
+      traySize: '1700'
     }
   ],
   trays: [
     {
       id: 1,
       name: '1700mm Tray',
-      image: 'https://placehold.co/400x300?text=1600mm+Tray',
+      image: 'https://placehold.co/400x300?text=1700mm+Tray',
       price: 2500,
       description: 'AS Aluminium Dual Cab Tray 1700mm - Matte Black',
-      weight: 95 // Weight in kg
+      weight: 95, 
+      traySize: '1700'
     },
     {
       id: 2,
       name: '2000mm Tray',
-      image: 'https://placehold.co/400x300?text=1800mm+Tray',
+      image: 'https://placehold.co/400x300?text=2000mm+Tray',
       price: 2800,
       description: 'AS Aluminium Dual Cab Tray 2000mm - Matte Black',
-      weight: 110 // Weight in kg
+      weight: 110, 
+      traySize: '2000'
     },
     {
       id: 3,
       name: '2400mm Tray',
-      image: 'https://placehold.co/400x300?text=2000mm+Tray',
+      image: 'https://placehold.co/400x300?text=2400mm+Tray',
       price: 3200,
       description: 'AS Aluminium Dual Cab Tray 2400mm - Matte Black',
-      weight: 125 // Weight in kg
+      weight: 125, 
+      traySize: '2400'
     }
   ],
 

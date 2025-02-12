@@ -720,3 +720,24 @@ body:has(.product-configurator) .announcement.block.text-body-small {
 .submit-quote:hover {
   background-color: #c41430;
 }
+
+.step-header {
+  margin-bottom: 1.5rem;
+}
+
+.step-description {
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  line-height: 1.4;
+}
+
+.no-options-message {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-style: italic;
+  background: #f5f5f5;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
